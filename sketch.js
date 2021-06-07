@@ -7,12 +7,14 @@ var carAnimation1,carAnimation2,logAnimation, playerAnimation;
 var school;
 var player;
 
+
 function preload()
 {
  carAnimation1 = loadAnimation("images/car1.png");
  carAnimation2 = loadAnimation("images/car2.png");
-playerAnimation = loadAnimation("images/Player-03.png");
-logAnimation = loadAnimation("images/log2.png");
+ playerAnimation = loadAnimation("images/Player-03.png");
+ logAnimation = loadAnimation("images/log2.png");
+ cityAnimation = loadAnimation("images/city1.png");
 
 
 
@@ -23,7 +25,8 @@ function setup() {
   carGroup1 = new Group();
   logGroup1 = new Group();
 
-  
+  city = createSprite(width/2,-1600);
+  city.addAnimation("city", cityAnimation);
 
   for(var i=0;i<6;i++){
     var bottomGrass1 = createSprite(563,height-50-(i*400),1370,grassHeight);
@@ -60,6 +63,7 @@ for(var i = 0; i < 40; i++){
   cars = new Car(2);
   carGroup1.add(cars.spt);
 }
+
 player = new Player(width/2,height-75);
 
 }
@@ -72,6 +76,18 @@ function draw() {
   
   translate(0,-player.spt.y+height-150);
 
+if(city.isTouching(player.spt)){
+  stroke("Green");
+  fill("Green");
+  textSize(60);
+  text("Congratulations! You Made It.",width/2-250,-1810);
+  carGroup1.destroyEach();
+  logGroup1.destroyEach();
+}
+
+
+
+ 
   if(logGroup1.isTouching(player.spt)){
     player.spt.x = player.spt.x-3;
   
@@ -90,6 +106,9 @@ function draw() {
     player.spt.x = width/2;
     player.spt.y = height-75;
   }
+ 
+
+
   
   drawSprites();
 }
